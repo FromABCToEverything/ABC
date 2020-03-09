@@ -6,13 +6,17 @@
 - [GitHub团队项目合作流程](https://www.cnblogs.com/schaepher/p/4933873.html)
 - [图文详解如何利用Git+Github进行团队协作开发](https://zhuanlan.zhihu.com/p/23478654)
 
+## 开发文档
+  - [3/9号更新 业务逻辑](https://github.com/FromABCToEverything/ABC/blob/dev/service_logic.md)
+  - [3/9号更新 数据表设计](https://github.com/FromABCToEverything/ABC/blob/dev/images/db_design.md)
+
 ## 进度
   - 3/6~3/8
     - [X] 确定系统架构及核心功能流程
-    - [ ] 熟悉各自工具、框架
-    - [ ] 阅读团队协作说明
-    - [ ] 理解系统架构图、核心功能流程图
-    - [ ] 设计数据表
+    - [X] 熟悉各自工具、框架
+    - [X] 阅读团队协作说明
+    - [X] 理解系统架构图、核心功能流程图
+    - [X] 设计数据表
   - 3/9~3/15
     - [ ] 前端核心功能原型设计
     - [ ] 后端实现url映射和数据库操作代码
@@ -39,7 +43,7 @@
     
 ### 后端
   - 3/6~3/8
-    - [ ] 熟悉springboot框架，开发HelloWorld Web应用
+    - [X] 熟悉springboot框架，开发HelloWorld Web应用
       - [Spring Boot 2.x基础教程：快速入门](http://blog.didispace.com/spring-boot-learning-21-1-1/)
   - 3/9~3/15
     #### Z
