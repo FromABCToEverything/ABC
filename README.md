@@ -7,7 +7,7 @@
 - [图文详解如何利用Git+Github进行团队协作开发](https://zhuanlan.zhihu.com/p/23478654)
 
 ## 开发文档
-  - [3/16号更新 业务逻辑](https://github.com/FromABCToEverything/ABC/blob/dev/images/other_function.png)
+  - [3/16号更新 业务逻辑](https://github.com/FromABCToEverything/ABC/blob/dev/service_logic.md#%E9%9D%9E%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD)
   - [3/9号更新 业务逻辑](https://github.com/FromABCToEverything/ABC/blob/dev/service_logic.md)
   - [3/9号更新 数据表设计](https://github.com/FromABCToEverything/ABC/blob/dev/images/db_design.md)
 
