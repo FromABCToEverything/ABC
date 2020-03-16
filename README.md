@@ -7,6 +7,7 @@
 - [图文详解如何利用Git+Github进行团队协作开发](https://zhuanlan.zhihu.com/p/23478654)
 
 ## 开发文档
+  - [3/16号更新 业务逻辑](https://github.com/FromABCToEverything/ABC/blob/dev/images/other_function.png)
   - [3/9号更新 业务逻辑](https://github.com/FromABCToEverything/ABC/blob/dev/service_logic.md)
   - [3/9号更新 数据表设计](https://github.com/FromABCToEverything/ABC/blob/dev/images/db_design.md)
 
@@ -18,10 +19,10 @@
     - [X] 理解系统架构图、核心功能流程图
     - [X] 设计数据表
   - 3/9~3/15
-    - [ ] 前端核心功能原型设计
-    - [ ] 后端实现url映射和数据库操作代码
-    - [ ] 后端搜集文本、生成练习题
-    - [ ] 确定非核心功能流程
+    - [X] 前端核心功能原型设计
+    - [X] 后端实现url映射和数据库操作代码
+    - [X] 后端搜集文本、生成练习题
+    - [X] 确定非核心功能流程
     - [ ] 审视、改进核心功能的设计
   - 3/16~3/22
     - [ ] 前端原型设计转为代码
