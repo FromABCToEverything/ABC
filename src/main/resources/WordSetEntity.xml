@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+        version="2.0">
+
+    <entity class="com.example.demo.entity.WordSetEntity">
+        <table name="word_set" schema="test" catalog=""/>
+        <attributes>
+            <id name="setId">
+                <column name="set_id" precision="-1"/>
+            </id>
+            <basic name="setName">
+                <column name="set_name"/>
+            </basic>
+            <basic name="creatorId">
+                <column name="creator_id"/>
+            </basic>
+            <basic name="creatorName">
+                <column name="creator_name"/>
+            </basic>
+            <basic name="avatarUrl">
+                <column name="avatar_url"/>
+            </basic>
+            <basic name="createdTime">
+                <column name="created_time" precision="-1"/>
+            </basic>
+            <basic name="lastEditTime">
+                <column name="last_edit_time" precision="-1"/>
+            </basic>
+            <basic name="collectedTimes">
+                <column name="collected_times" precision="-1"/>
+            </basic>
+            <basic name="personal">
+                <column name="personal" length="1"/>
+            </basic>
+        </attributes>
+    </entity>
+</entity-mappings>

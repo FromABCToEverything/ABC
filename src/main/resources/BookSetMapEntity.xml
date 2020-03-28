@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+        version="2.0">
+
+    <entity class="com.example.demo.entity.BookSetMapEntity">
+        <table name="book_set_map" schema="test" catalog=""/>
+        <attributes>
+            <basic name="setId">
+                <column name="set_id" precision="-1"/>
+            </basic>
+            <basic name="entryId">
+                <column name="entry_id" precision="-1"/>
+            </basic>
+            <basic name="order">
+                <column name="_order" precision="-1"/>
+            </basic>
+        </attributes>
+    </entity>
+</entity-mappings>

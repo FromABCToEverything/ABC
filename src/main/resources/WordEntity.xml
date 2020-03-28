@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+        version="2.0">
+
+    <entity class="com.example.demo.entity.WordEntity">
+        <table name="word" schema="test" catalog=""/>
+        <attributes>
+            <id name="wordId">
+                <column name="word_id" precision="-1"/>
+            </id>
+            <basic name="content">
+                <column name="content"/>
+            </basic>
+            <basic name="pos">
+                <column name="pos"/>
+            </basic>
+            <basic name="lang">
+                <column name="lang" length="3"/>
+            </basic>
+            <basic name="meaningRaw">
+                <column name="meaning_raw" length="8191"/>
+            </basic>
+            <basic name="meaningZh">
+                <column name="meaning_zh"/>
+            </basic>
+            <basic name="pronounceUrl">
+                <column name="pronounce_url" length="1023"/>
+            </basic>
+            <basic name="pronounce">
+                <column name="pronounce" length="1023"/>
+            </basic>
+            <basic name="tag">
+                <column name="tag"/>
+            </basic>
+        </attributes>
+    </entity>
+</entity-mappings>

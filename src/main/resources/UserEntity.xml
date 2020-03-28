@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+        version="2.0">
+
+    <entity class="com.example.demo.entity.UserEntity">
+        <table name="user" schema="test" catalog=""/>
+        <attributes>
+            <id name="openId">
+                <column name="open_id"/>
+            </id>
+            <basic name="avatarUrl">
+                <column name="avatar_url"/>
+            </basic>
+            <basic name="name">
+                <column name="name"/>
+            </basic>
+            <basic name="reputation">
+                <column name="reputation" precision="-1"/>
+            </basic>
+        </attributes>
+    </entity>
+</entity-mappings>

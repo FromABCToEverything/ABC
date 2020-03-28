@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+        version="2.0">
+
+    <entity class="com.example.demo.entity.WordCountEntity">
+        <table name="word_count" schema="test" catalog=""/>
+        <attributes>
+            <basic name="wordId">
+                <column name="word_id" nullable="false" precision="-1"/>
+            </basic>
+            <basic name="userId">
+                <column name="user_id" nullable="false" precision="-1"/>
+            </basic>
+            <basic name="bookId">
+                <column name="book_id" nullable="false" precision="-1"/>
+            </basic>
+        </attributes>
+    </entity>
+</entity-mappings>

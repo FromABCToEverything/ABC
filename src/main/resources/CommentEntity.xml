@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+        version="2.0">
+
+    <entity class="com.example.demo.entity.CommentEntity">
+        <table name="comment" schema="test" catalog=""/>
+        <attributes>
+            <basic name="type">
+                <column name="type" length="1"/>
+            </basic>
+            <basic name="toId">
+                <column name="to_id" precision="-1"/>
+            </basic>
+            <basic name="commentatorId">
+                <column name="commentator_id"/>
+            </basic>
+            <basic name="commentatorName">
+                <column name="commentator_name"/>
+            </basic>
+            <basic name="avatarUrl">
+                <column name="avatar_url"/>
+            </basic>
+            <basic name="score">
+                <column name="score" precision="-1"/>
+            </basic>
+            <basic name="content">
+                <column name="content" nullable="false" length="1024"/>
+            </basic>
+            <basic name="lastEditTime">
+                <column name="last_edit_time" precision="-1"/>
+            </basic>
+        </attributes>
+    </entity>
+</entity-mappings>

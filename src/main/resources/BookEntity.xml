@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+        version="2.0">
+
+    <entity class="com.example.demo.entity.BookEntity">
+        <table name="book" schema="test" catalog=""/>
+        <attributes>
+            <id name="bookId">
+                <column name="book_id" precision="-1"/>
+            </id>
+            <basic name="title">
+                <column name="title"/>
+            </basic>
+            <basic name="author">
+                <column name="author"/>
+            </basic>
+            <basic name="language">
+                <column name="language" length="3"/>
+            </basic>
+            <basic name="coverUrl">
+                <column name="cover_url"/>
+            </basic>
+            <basic name="textUrl">
+                <column name="text_url"/>
+            </basic>
+            <basic name="description">
+                <column name="description" length="1024"/>
+            </basic>
+            <basic name="isbn">
+                <column name="isbn" length="15"/>
+            </basic>
+            <basic name="press">
+                <column name="press"/>
+            </basic>
+            <basic name="publicatedDate">
+                <column name="publicated_date" precision="-1"/>
+            </basic>
+        </attributes>
+    </entity>
+</entity-mappings>

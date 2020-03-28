@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+        version="2.0">
+
+    <entity class="com.example.demo.entity.GrammarEntity">
+        <table name="grammar" schema="test" catalog=""/>
+        <attributes>
+            <id name="grammarId">
+                <column name="grammar_id" precision="-1"/>
+            </id>
+            <basic name="form">
+                <column name="form"/>
+            </basic>
+            <basic name="lang">
+                <column name="lang" length="3"/>
+            </basic>
+            <basic name="description">
+                <column name="description"/>
+            </basic>
+            <basic name="tag">
+                <column name="tag"/>
+            </basic>
+        </attributes>
+    </entity>
+</entity-mappings>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+        version="2.0">
+
+    <entity class="com.example.demo.entity.SessionEntity">
+        <table name="session" schema="test" catalog=""/>
+        <attributes>
+            <basic name="openId">
+                <column name="open_id"/>
+            </basic>
+            <basic name="sessionId">
+                <column name="session_id"/>
+            </basic>
+        </attributes>
+    </entity>
+</entity-mappings>
