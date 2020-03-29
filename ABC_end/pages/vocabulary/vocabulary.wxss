@@ -1,0 +1,15 @@
+/* pages/vocabulary/vocabulary.wxss */
+page{
+  height: 100%;
+}
+
+.container{
+  height: 100%;
+  /* background-color: azure; */
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

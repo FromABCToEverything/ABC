@@ -1,0 +1,42 @@
+{
+  "pages": [
+   
+    "pages/index/index",
+    "pages/list/list",
+    "pages/search/search",
+    "pages/bookDetail/bookDetail",
+    "pages/vocabulary/vocabulary",
+    "pages/wordDetail/wordDetail",
+    "pages/question/question",
+    "pages/comment/comment",
+    "pages/user/user",
+    "pages/note/note"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "ColorUI",
+    "navigationStyle": "custom",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "书架",
+        "iconPath": "/src/images/basics.png",
+        "selectedIconPath": "/src/images/basics_cur.png"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "用户",
+        "iconPath": "/src/images/about.png",
+        "selectedIconPath": "/src/images/about_cur.png"
+      }
+    ]
+  },
+  "usingComponents": {
+    "cu-custom": "/colorui/components/cu-custom"
+  },
+  "sitemapLocation": "sitemap.json"
+}

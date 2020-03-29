@@ -1,0 +1,66 @@
+<!--pages/wordDetail/wordDetail.wxml-->
+<cu-custom bgColor="bg-gradual-green" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">单词详情</view>
+</cu-custom>
+
+<view class="bg-white">
+  <view class="basis-lg bg-grey margin-xs padding-sm radius">单词内容:{{wordDetail[0].content}}</view>
+  <view class="flex">
+    <view class="flex-sub bg-grey padding-sm margin-xs radius">音标{{wordDetail[0].pronounce}}</view>
+    <view class="flex-sub bg-grey padding-sm margin-xs radius">
+      <text class="cuIcon-notification"></text>
+    </view>
+  </view>
+  <view class="basis-lg bg-grey margin-xs padding-sm radius">词性{{wordDetail[0].pos}}</view>
+</view>
+
+<view class="bg-white">
+  <view class="text-left padding">中文释义{{wordDetail[0].meaningZh}}</view>
+  <view class="text-left padding">源语言释义：{{wordDetail[0].meaningRaw}}</view>
+  <view class="text-left padding" wx:if="{{wordDetail[0].tag!=null}}">tag:{{wordDetail[0].tag}}</view>
+</view>
+
+<!-- 底部操作条 -->
+<view class="box">
+  <view class="cu-bar tabbar bg-white foot">
+    <view class="action">
+      <picker bindchange="PickerChange" value="{{index}}" range="{{picker}}">
+        <view class="picker">
+          <!-- {{index?picker[index]:'禁止换行，超出容器部分会以 ... 方式截断'}} -->
+          <!-- <button class="cu-btn bg-grey">收藏</button> -->
+          <text class="cuIcon-like"></text>
+          <view class="text-grey">收藏</view>
+        </view>
+      </picker>
+    </view>
+    <view class="action">
+      <text class="cuIcon-comment" bindtap="comment"></text>
+      <view class="text-gray">评论</view>
+    </view>
+    <view class="action">
+      <text class="cuIcon-writefill" bindtap="makeNote"></text>
+      <view class="text-gray">笔记</view>
+    </view>
+    <view class="action">
+      <text class="cuIcon-edit" bindtap="practice"></text>
+      <view class="text-gray">练习</view>
+    </view>
+  </view>
+</view>
+
+<!-- <view class="cu-modal {{modalName=='RadioModal'?'show':''}}" bindtap="hideModal">
+  <view class="cu-dialog" catchtap>
+    <radio-group class="block">
+      <view class="cu-list menu text-left">
+        <view class="cu-item" wx:for="{{5}}" wx:key>
+          <label class="flex justify-between align-center flex-sub"> -->
+            <!-- 获取用户建立的书单 item{{index+1}} -->
+            <!-- <view class="flex-sub">Item {{index +1}}</view>
+            <radio class="round"></radio>
+          </label>
+        </view>
+      </view>
+    </radio-group>
+  </view>
+</view> -->

@@ -1,0 +1,82 @@
+<!--miniprogram/pages/question/question.wxml-->
+<cu-custom bgColor="bg-gradual-green" isCustom="{{true}}">
+  <view slot="content">笔记集</view>
+</cu-custom>
+
+<button bindtap='getMsg'>开始答题 </button>
+
+<view class="padding bg-white">
+  <view class="text-left padding">{{webMsg[0].questionId}}:{{webMsg[0].stem}}</view>
+</view>
+<!-- <view>{{webMsg[0].questionId}}:{{webMsg[0].stem}}</view> -->
+<!-- <view class="animation-slide-left"> -->
+<view class="cu-list">
+  <view class=" bg-white padding solid-bottom margin-top">
+    <button class="cu-btn icon bg-olive" bindtap="A">
+      <text class="text-lg">A</text>
+    </button>
+    <text class="text-center padding">{{choice[0]}}</text>
+  </view>
+  <view class=" bg-white padding solid-bottom">
+    <button class="cu-btn icon bg-olive" bindtap="B">
+      <text class="text-lg">B</text>
+    </button>
+    <text class="text-center padding">{{choice[1]}}</text>
+  </view>
+  <view class=" bg-white padding solid-bottom">
+    <button class="cu-btn icon bg-olive" bindtap="C">
+      <text class="text-lg">C</text>
+    </button>
+    <text class="text-center padding">{{choice[2]}}</text>
+  </view>
+  <view class=" bg-white padding solid-bottom">
+    <button class="cu-btn icon bg-olive" bindtap="D">
+      <text class="text-lg">D</text>
+    </button>
+    <text class="text-center padding">{{choice[3]}}</text>
+  </view>
+
+  <view class="flex solid-bottom padding justify-around">
+    <!-- <view class="bg-grey padding-sm margin-xs radius">around</view>
+    <view class="bg-grey padding-sm margin-xs radius">around</view> -->
+    <button class="cu-btn round bg-green" bindtap="showAnswer">显示解析</button>
+    <button class="cu-btn round bg-green">下一题</button>
+  </view>
+  <view class="bg-white content" wx:if="{{showTheAnswer}}">
+    <text class="text-left">答案:{{yourAnswer}}</text>
+  </view>
+</view>
+
+<!-- <button bindtap="A">A:{{choice[0]}}
+  </button>
+  <button bindtap="B">B:{{choice[1]}}
+  </button>
+  <button bindtap="C">C:{{choice[2]}}
+  </button>
+  <button bindtap="D">D:{{choice[3]}}
+  </button> -->
+
+<!-- </view> -->
+
+<view class="box">
+  <view class="cu-bar tabbar bg-white foot">
+    <view class="action">
+      <picker bindchange="PickerChange" value="{{index}}" range="{{picker}}">
+        <view class="picker">
+          <!-- {{index?picker[index]:'禁止换行，超出容器部分会以 ... 方式截断'}} -->
+          <!-- <button class="cu-btn bg-grey">收藏</button> -->
+          <text class="cuIcon-like"></text>
+          <view class="text-grey">收藏</view>
+        </view>
+      </picker>
+    </view>
+    <view class="action">
+      <text class="cuIcon-comment" bindtap="comment"></text>
+      <view class="text-gray">评论</view>
+    </view>
+    <view class="action">
+      <text class="cuIcon-writefill" bindtap="makeNote"></text>
+      <view class="text-gray">笔记</view>
+    </view>
+  </view>
+</view>

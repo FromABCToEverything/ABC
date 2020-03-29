@@ -1,0 +1,53 @@
+<!--pages/vocabulary/vocabulary.wxml-->
+<cu-custom bgColor="bg-gradual-green" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">单词列表</view>
+</cu-custom>
+  <!-- 选择排序 -->
+  <view class="cu-form-group">
+    <view class="title">单词排序</view>
+    <picker bindchange="PickerChange" value="{{index}}" range="{{picker}}">
+      <view class="picker">
+        {{index?picker[index]:'选择'}}
+      </view>
+    </picker>
+  </view>
+
+  <!-- 开始练习 -->
+  <view class="flex flex-direction">
+    <button class="cu-btn bg-green lg" bindtap="startToPractice">开始练习</button>
+  </view>
+
+  <!-- 单词列表 -->
+  <view class="bg-white" wx:for="{{vocabulary}}" bindtap="toWordDetail" data-item="{{item.wordId}}">
+    <view class="flex p-xs margin-bottom-xs mb-xs">
+      <view class="flex-treble bg-grey padding-sm margin-xs radius">
+        <text class="text-black">{{item.content}}</text>
+      </view>
+      <view class="flex-twice bg-grey padding-sm margin-xs radius">
+        <text>{{item.pronounce}}</text>
+      </view>
+      <view class="flex-sub bg-grey padding-sm margin-xs radius">
+        <text class="cuIcon-notification"></text>
+      </view>
+    </view>
+    <view class="flex  p-xs margin-bottom-xs mb-sm">
+    </view>
+  </view>
+
+   <view class="box">
+  <view class="cu-bar tabbar bg-white foot">
+    <view class="action">
+      <text class="cuIcon-like"></text>
+      <view class="text-gray">收藏</view>
+    </view>
+    <view class="action">
+      <text class="cuIcon-comment" bindtap="comment"></text>
+      <view class="text-gray">评论</view>
+    </view>
+    <view class="action">
+      <text class="cuIcon-writefill" bindtap="makeNote"></text>
+      <view class="text-gray">笔记</view>
+    </view>
+  </view>
+</view>

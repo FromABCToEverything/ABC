@@ -1,0 +1,37 @@
+<cu-custom bgColor="bg-gradual-green">
+  <view slot="content">我的书架</view>
+</cu-custom>
+<!-- 搜索框 -->
+<view class="cu-bar bg-white search" style="top:{{CustomBar}}px">
+  <view class="search-form round">
+    <text class="cuIcon-search"></text>
+    <input type="text" placeholder="搜索" confirm-type="search" bindtap="toSearch"></input>
+  </view>
+</view>
+<!-- 书架显示 -->
+<view class="cu-list grid col-3 no-border padding">
+  <view class="item solid-bottom margin-top" wx:for="{{bookList}}" bindtap="toBookDetail" data-itemId="{{item.bookId}}" data-bookName="{{item.title}}">
+    <image style="width: 80px; height: 100px" src="{{item.coverUrl}}"></image>
+    <view class="text-center padding">{{item.title}}</view>
+  </view>
+
+
+</view>
+
+
+
+
+<!-- <view class="margin-xl padding-xl bg-white radius shadow shadow-lg">
+  <view class="flex justify-center">
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" class='cu-btn round bg-green shadow'> 获取头像昵称 </button>
+    <block wx:else>
+      <view class='text-center'>
+        <view class="cu-avatar xl round solids" style="background-image:url({{userInfo.avatarUrl}})"></view>
+        <view class="padding">{{userInfo.nickName}}</view>
+      </view>
+    </block>
+  </view>
+</view>
+<view class="text-center margin-top">
+  <text class="text-grey text-xl">{{motto}}</text>
+</view> -->

@@ -1,0 +1,96 @@
+<!--pages/list/list.wxml-->
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">B/W/Q/N列表</view>
+</cu-custom>
+
+<!-- 显示书籍列表 -->
+<view wx:if="{{type=='B'}}" class="cu-card article no-card" wx:for="{{books_arr}}" bindtap="toBookDetail" data-item="{{item.bookId}}">
+  <view class="cu-item shadow">
+    <view class="title">
+      <view class="text-cut">{{item.title}}</view>
+    </view>
+    <view class="content">
+      <image style="width: 45x; height: 65px" src="{{item.coverUrl}}" mode="aspectFit"></image>
+      <view class="desc">
+        <view class="text-content"> {{item.description}}</view>
+        <view>
+          <view class="cu-tag bg-red light sm round">{{item.author}}</view>
+          <view class="cu-tag bg-green light sm round">{{item.publicatedDate}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 显示单词列表 -->
+<view wx:if="{{type=='W'}}" class="flex flex-direction">
+  <button class="cu-btn bg-green lg" bindtap="startToPractice">开始练习</button>
+</view>
+<view wx:if="{{type=='W'}}" class="bg-white" wx:for="{{words_arr}}" bindtap="toWordDetail">
+  <view class="flex p-xs margin-bottom-xs mb-xs">
+    <view class="flex-treble bg-grey padding-sm margin-xs radius">
+      <text class="text-black">{{item.content}}</text>
+    </view>
+    <view class="flex-twice bg-grey padding-sm margin-xs radius">
+      <text>{{item.pronounce}}</text>
+    </view>
+    <view class="flex-sub bg-grey padding-sm margin-xs radius">
+      <text class="cuIcon-notification"></text>
+    </view>
+  </view>
+  <view class="flex  p-xs margin-bottom-xs mb-sm">
+    <view class="flex-sub bg-grey padding-sm margin-xs radius">
+      <text>{{item.pos}}</text>
+    </view>
+    <view class="flex-twice bg-grey padding-sm margin-xs radius">
+      <text>{{item.meaningRaw}}</text>
+    </view>
+  </view>
+</view>
+
+<!-- 显示题目列表 -->
+<view wx:if="{{type=='Q'}}" class="bg-white padding" wx:for="{{questions_arr}}" bindtap="toQuestionDetail">
+  <view class="cu-item">
+    <view class="content">
+      <view class="text-black flex ">
+        <view class="cu-tag round bg-orange sm margin-right">题目</view>
+        <text class="text-cut text-lg text-bold">{{item.stem}}</text>
+      </view>
+      <view class="text-gray text-lg flex margin-top">
+        <text class="text-cut">{{item.stem}}</text>
+      </view>
+      <view class="text-gray text-sm text-right margin-top">
+        <text class="cuIcon-favorfill margin-lr-xs">{{item.collectedTimes}}</text>
+        <text class="margin-lr-xs">评分:{{item.score}}</text>
+        <text class="margin-lr-xs">{{item.lastEditTime}}</text>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 显示笔记列表 -->
+<view wx:if="{{type=='N'}}"  class="bg-white padding" wx:for="{{notes_arr}}" bindtap="toNote" data-item="{{item.noteId}}">
+  <view class="cu-item">
+    <view class="content">
+      <view class="text-black flex ">
+        <view class="cu-tag round bg-olive sm margin-right">笔记</view>
+        <text class="text-cut text-lg text-bold">{{item.title}}</text>
+      </view>
+      <view class="text-gray text-lg flex margin-top">
+        <text class="text-cut">{{item.content}}</text>
+      </view>
+      <view class="text-right padding">作者：{{item.creator}}</view>
+    </view>
+  </view>
+</view>
+
+<!-- 底部操作条 -->
+  <view class="cu-bar tabbar bg-white foot">
+    <view class="action text-grey" bindtap="collect">
+      <view class="cuIcon-favor"></view> 收藏
+    </view>
+    <view class="action text-gray">
+      <view class="cuIcon-comment"></view> 评论
+    </view>
+  </view>

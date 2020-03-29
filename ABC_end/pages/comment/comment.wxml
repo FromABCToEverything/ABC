@@ -1,0 +1,40 @@
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}"><view slot="backText">返回</view><view slot="content">评论</view></cu-custom>
+<view class="cu-card dynamic ">
+  <view class="cu-item shadow">
+    <view class="cu-list menu-avatar comment solids-top" wx:for="{{commentList}}">
+      <view class="cu-item">
+        <view class="cu-avatar round" style="background-image:url(https://ossweb-img.qq.com/images/lol/img/champion/Morgana.png);"></view>
+        <view class="content">
+          <view class="text-grey">{{item.commentatorName}}</view>
+          <view class="text-gray text-content text-df">{{item.content}}</view>
+          <view class="margin-top-sm flex justify-between">
+            <view class="text-gray text-df">{{item.lastEditTime}}</view>
+            <view class="text-gray text-df">评分：{{item.score}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+
+<view class="cu-bar foot input">
+  <input type="text" placeholder="输入评论" confirm-type="done" bindblur="inputBlur" focus="{{true}}"  value="{{content}}"></input>
+  <button class="cu-btn bg-green shadow" bindtap="showModal" data-target="ScoreModal">评分</button>
+  <button class="cu-btn bg-green shadow" bindtap="sendComment">发表</button>
+</view>
+
+<view class="cu-modal {{modalName=='ScoreModal'?'show':''}}" bindtap="hideModal">
+  <view class="cu-dialog" >
+    <radio-group class="block">
+      <view class="cu-list menu text-left" >
+        <view class="cu-item" wx:for="{{score_arr}}" catchtap="scoreChange" wx:key data-name="{{item.name}}">
+          <label class="flex justify-between align-center flex-sub">
+            <view class="flex-sub">{{item.value}}</view>
+            <radio class="round"></radio>
+          </label>
+        </view>
+      </view>
+    </radio-group>
+  </view>
+</view>

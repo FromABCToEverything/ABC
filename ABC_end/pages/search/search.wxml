@@ -1,0 +1,186 @@
+<cu-custom bgColor="bg-gradual-green" isCustom="{{true}}">
+  <view slot="content">搜索</view>
+</cu-custom>
+
+<view class="cu-bar search bg-white">
+  <view class="search-form round">
+    <text class="cuIcon-search"></text>
+    <input type="text" placeholder="搜索书籍、题目、书单等" confirm-type="search" bindblur="InputBlur" focus="{{true}}" data-keyword="keyword" value="{{keyword}}"></input>
+  </view>
+  <view class="action">
+    <button class="cu-btn bg-green shadow-blur round" bindtap="Search">搜索</button>
+  </view>
+</view>
+
+<view class="cu-item text-center bg-white text-lg" bindtap="HiddenChange">
+  <text class="cuIcon-{{hidden?'unfold':'fold'}} lg text-gray"></text>
+</view>
+
+<view wx:if="{{!hidden}}">
+  <view class="cu-form-group margin-top">
+    <view class="title">排序依据</view>
+    <picker bindchange="SortPickerChange" value="{{sort_index}}" range-key="value" range="{{sort_obj_arr}}">
+      <view class="picker">
+        {{sort_obj_arr[sort_index].value}}
+      </view>
+    </picker>
+  </view>
+
+  <view class="cu-form-group margin-top">
+    <view class="title">顺序</view>
+    <picker bindchange="OrderPickerChange" value="{{order_index}}" range-key="value" range="{{order_obj_arr}}">
+      <view class="picker">
+        {{order_obj_arr[order_index].value}}
+      </view>
+    </picker>
+  </view>
+
+  <view class="cu-form-group margin-top">
+    <view class="title">搜索类型</view>
+  </view>
+
+  <checkbox-group bindchange="TypesChange">
+    <label class="checkbox" wx:for="{{type_obj_arr}}">
+      <view class="cu-form-group">
+        <view class="title">{{item.value}}</view>
+        <checkbox class="round" value="{{item.name}}" checked="{{item.checked}}" />
+      </view>
+    </label>
+  </checkbox-group>
+</view>
+
+<view wx:if="{{searched}}">
+  <scroll-view scroll-x class="bg-white nav text-center">
+    <view class="cu-item {{index==tab_cur_id?'text-blue cur':''}}" wx:for="{{tab_to_show_arr}}" wx:key bindtap="TabSelect" data-id="{{index}}" data-name="{{tab_to_show_arr[index].name}}">
+      {{tab_to_show_arr[index].value}}
+    </view>
+  </scroll-view>
+
+  <view wx:if="{{tab_cur_name=='b'}}" class="cu-card article no-card" wx:for="{{book_arr}}" bindtap="toBookDetail" data-itemid = "{{item.bookId}}" data-bookname = "{{item.title}}">
+    <view class="cu-item shadow">
+      <view class="title">
+        <view class="text-cut">{{item.title}}</view>
+      </view>
+      <view class="content">
+        <image style="width: 45x; height: 65px" src="{{item.coverUrl}}" mode="aspectFit"></image>
+        <view class="desc">
+          <view class="text-content"> {{item.description}}</view>
+          <view>
+            <view class="cu-tag bg-red light sm round">{{item.author}}</view>
+            <view class="cu-tag bg-green light sm round">{{item.publicatedDate}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{tab_cur_name=='q'}}" class="cu-card article no-card" wx:for="{{question_arr}}" bindtap="toQuestionDetail" data-item="{{item.questionId}}">
+    <view class="cu-item shadow">
+      <view class="content">
+        <!-- <image style="width: 45x; height: 65px"  src="{{item.coverUrl}}" mode="aspectFit"></image> -->
+        <view class="desc">
+          <view class="text-content"> {{item.stem}}</view>
+          <view class="text-gray text-sm text-right padding">
+            <text class="cuIcon-favorfill margin-lr-xs">{{item.collectedTimes}}</text>
+            <text class="margin-lr-xs">评分:{{item.score}}</text>
+            <text class="margin-lr-xs">{{item.lastEditTime}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 书单列表 -->
+  <view wx:if="{{tab_cur_name=='B'}}" class="cu-card article no-card" wx:for="{{book_set_arr}}" bindtap = "toBookList" data-type="{{'B'}}" data-itemid="{{item.setId}}" data-bookSetName="{{item.setName}}">
+    <view class="cu-item shadow">
+      <view class="content">
+        <!-- 保留书单封面 -->
+        <!-- <image style="width: 45x; height: 65px"  src="{{item.coverUrl}}" mode="aspectFit"></image> -->
+        <view class="desc">
+          <view class="text-grey text-lg text-left padding">
+            <text class="margin-ls-xs">书单名{{item.setName}}</text>
+          </view>
+          <view class="text-grey text-sm text-left padding">
+            <text class="margin-ls-xs">创建者：{{item.creatorName}}</text>
+          </view>
+          <view class="text-gray text-sm text-right padding">
+            <text class="cuIcon-favorfill margin-lr-xs">{{item.collectedTimes}}</text>
+            <text class="margin-lr-xs">创建时间：{{item.createdTime}}</text>
+            <text class="margin-lr-xs">最近编辑时间：{{item.lastEditTime}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 单词集列表 -->
+  <view wx:if="{{tab_cur_name=='W'}}" class="cu-card article no-card" wx:for="{{word_set_arr}}" bindtap="toWordList" data-type="{{'W'}}" data-itemid="{{item.setId}}" data-wordSetName="{{item.setName}}">
+    <view class="cu-item shadow">
+      <view class="content">
+        <!-- 保留词集封面 -->
+        <!-- <image style="width: 45x; height: 65px"  src="{{item.coverUrl}}" mode="aspectFit"></image> -->
+        <view class="desc">
+          <view class="text-grey text-lg text-left padding">
+            <text class="margin-ls-xs">词集名{{item.setName}}</text>
+          </view>
+          <view class="text-grey text-sm text-left padding">
+            <text class="margin-ls-xs">创建者：{{item.creatorName}}</text>
+          </view>
+          <view class="text-gray text-sm text-right padding">
+            <text class="cuIcon-favorfill margin-lr-xs">{{item.collectedTimes}}</text>
+            <text class="margin-lr-xs">创建时间：{{item.createdTime}}</text>
+            <text class="margin-lr-xs">最近编辑时间：{{item.lastEditTime}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 题集列表 -->
+  <view wx:if="{{tab_cur_name=='Q'}}" class="cu-card article no-card" wx:for="{{question_set_arr}}" bindtap="toQuestionList" data-type="{{'Q'}}" data-item="{{item.setId}}" data-questionSetName="{{item.setName}}">
+    <view class="cu-item shadow">
+      <view class="content ">
+        <!-- 保留词集封面 -->
+        <!-- <image style="width: 45x; height: 65px "  src="{{item.coverUrl}} " mode="aspectFit "></image> -->
+        <view class="desc ">
+          <view class="text-grey text-lg text-left padding ">
+            <text class="margin-ls-xs ">题名{{item.setName}}</text>
+          </view>
+          <view class="text-grey text-sm text-left padding ">
+            <text class="margin-ls-xs ">创建者：{{item.creatorName}}</text>
+          </view>
+          <view class="text-gray text-sm text-right padding ">
+            <text class="cuIcon-favorfill margin-lr-xs ">{{item.collectedTimes}}</text>
+            <text class="margin-lr-xs ">创建时间：{{item.createdTime}}</text>
+            <text class="margin-lr-xs ">最近编辑时间：{{item.lastEditTime}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 笔记集列表 -->
+  <view wx:if="{{tab_cur_name=='N'}}" class="cu-card article no-card" wx:for="{{note_set_arr}}" bindtap="toNoteList" data-type="{{'N'}}" data-itemid="{{item.setId}}" data-noteSetName="{{item.setName}}">
+    <view class="cu-item shadow">
+      <view class="content ">
+        <!-- 保留词集封面 -->
+        <!-- <image style="width: 45x; height: 65px "  src="{{item.coverUrl}} " mode="aspectFit "></image> -->
+        <view class="desc ">
+          <view class="text-grey text-lg text-left padding ">
+            <text class="margin-ls-xs ">笔记集名：{{item.setName}}</text>
+          </view>
+          <view class="text-grey text-sm text-left padding ">
+            <text class="margin-ls-xs ">创建者：{{item.creatorName}}</text>
+          </view>
+          <view class="text-gray text-sm text-right padding ">
+            <text class="cuIcon-favorfill margin-lr-xs ">{{item.collectedTimes}}</text>
+            <text class="margin-lr-xs ">创建时间：{{item.createdTime}}</text>
+            <text class="margin-lr-xs ">最近编辑时间：{{item.lastEditTime}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+
+</view>
