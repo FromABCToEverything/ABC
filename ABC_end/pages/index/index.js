@@ -7,7 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    open_id:2,
+    page:0,
+    session_id:3,
     // bookList: [{
     //     bookId: "1",
     //     coverUrl: "/src/images/01.jpg ",
@@ -48,7 +49,7 @@ Page({
     var bookId=e.currentTarget.dataset.itemid;
     var bookTitle = e.currentTarget.dataset.bookname;
    wx.navigateTo({
-     url: '../bookDetail/bookDetail?open_id=2'+'&bookId='+bookId+'&title='+bookTitle,
+     url: '../bookDetail/bookDetail?session_id=3'+'&bookId='+bookId+'&title='+bookTitle,
    })
   },
   
@@ -60,7 +61,7 @@ Page({
     var self = this
 
     wx.request({
-      url: 'http://localhost:8080/book_set?open_id=2',
+      url: 'http://localhost:8080/book_set?session_id=3&page=1',
       data: {
 
       },
@@ -71,7 +72,7 @@ Page({
       success: function (res) {
         console.log(res.data);
         self.setData({
-          bookList: res.data
+          bookList: res.data.book
         })
       }
     })

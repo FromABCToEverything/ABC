@@ -1,11 +1,11 @@
-<!--pages/list/list.wxml-->
-<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+<!--pages/userlist/userlist.wxml-->
+<cu-custom bgColor="bg-gradual-green" isBack="{{true}}">
   <view slot="backText">返回</view>
-  <view slot="content">B/W/Q/N列表</view>
+  <view slot="content">用户创建的集合列表</view>
 </cu-custom>
 
 <!-- 显示书籍列表 -->
-<view wx:if="{{type=='B'}}" class="cu-card article no-card" wx:for="{{books_arr}}" bindtap="toBookDetail" data-item="{{item.bookId}}">
+<view wx:if="{{type=='B'}}" class="cu-card article no-card" wx:for="{{books_arr}}" data-itemId="{{item.bookId}}" bindtap="toBookDetail">
   <view class="cu-item shadow">
     <view class="title">
       <view class="text-cut">{{item.title}}</view>
@@ -24,10 +24,10 @@
 </view>
 
 <!-- 显示单词列表 -->
-<view wx:if="{{type=='W'}}" class="flex flex-direction">
+<!-- <view wx:if="{{type=='W'}}" class="flex flex-direction">
   <button class="cu-btn bg-green lg" bindtap="startToPractice">开始练习</button>
-</view>
-<view wx:if="{{type=='W'}}" class="bg-white" wx:for="{{words_arr}}" bindtap="toWordDetail">
+</view> -->
+<view wx:if="{{type=='W'}}" class="bg-white" wx:for="{{words_arr}}" data-itemId="{{item.word_id}}" bindtap="toWordDetail">
   <view class="flex p-xs margin-bottom-xs mb-xs">
     <view class="flex-treble bg-grey padding-sm margin-xs radius">
       <text class="text-black">{{item.content}}</text>
@@ -50,11 +50,11 @@
 </view>
 
 <!-- 显示题目列表 -->
-<view wx:if="{{type=='Q'}}" class="bg-white padding" wx:for="{{questions_arr}}" bindtap="toQuestionDetail" data-itemid="{{item.questionId}}">
+<view wx:if="{{type=='Q'}}" class="bg-white padding" wx:for="{{questions_arr}}" data-itemId="{{item.questionId}}" bindtap="toQuestionDetail">
   <view class="cu-item">
     <view class="content">
       <view class="text-black flex ">
-        <view class="cu-tag round bg-orange sm margin-right">题目</view>
+        <view class="cu-tag round bg-orange sm margin-right">笔记</view>
         <text class="text-cut text-lg text-bold">{{item.stem}}</text>
       </view>
       <view class="text-gray text-lg flex margin-top">
@@ -69,8 +69,9 @@
   </view>
 </view>
 
+
 <!-- 显示笔记列表 -->
-<view wx:if="{{type=='N'}}"  class="bg-white padding" wx:for="{{notes_arr}}" bindtap="toNote" data-item="{{item.noteId}}">
+<view wx:if="{{type=='N'}}"  class="bg-white padding" wx:for="{{notes_arr}}" data-item="{{item}}" data-itemId="{{item.noteId}}" bindtap="toNote">
   <view class="cu-item">
     <view class="content">
       <view class="text-black flex ">
@@ -85,12 +86,11 @@
   </view>
 </view>
 
-<!-- 底部操作条 -->
-  <view class="cu-bar tabbar bg-white foot">
+  <view class="cu-bar tabbar bg-white foot" wx-if="{{hidefoot==false}}">
     <view class="action text-grey" bindtap="collect">
-      <view class="cuIcon-favor"></view> 收藏
+      <view class="cuIcon-{{isCollected?'favorfill':'favor'}}" bindtap="collect"></view> 收藏
     </view>
     <view class="action text-gray">
-      <view class="cuIcon-comment"></view> 评论
+      <view class="cuIcon-comment" bindtap="comment"></view> 评论
     </view>
   </view>

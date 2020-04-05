@@ -42,7 +42,7 @@
       <view class="text-gray">收藏</view>
     </view>
     <view class="action">
-      <text class="cuIcon-comment" bindtap="comment"></text>
+      <text class="cuIcon-comment" bindtap="Tocomment" data-id="{{book[0].bookId}}"></text>
       <view class="text-gray">评论</view>
     </view>
     <view class="action">

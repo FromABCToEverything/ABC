@@ -1,0 +1,5 @@
+<cu-custom bgColor="bg-gradual-green" isBack="{{true}}">
+  <view slot="content">授权</view>
+</cu-custom>
+
+<button  open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">授权登录</button>

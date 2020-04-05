@@ -11,35 +11,44 @@
   <button class="cu-btn bg-green lg" bindtap="toVocabulary" data-book="{{book[0].bookId}}">开始学习单词</button>
 </view>
 
-<view class="box">
 <view class="cu-bar tabbar bg-white foot">
-
-  <view class="action" bindtap="showModal" data-target="CollectModal">
-    <text class="cuIcon-like" ></text>
-    <view class="text-gray">收藏</view>
+  <view class="action text-grey" bindtap="collect" data-target="CollectModal">
+    <view class="cuIcon-favor"></view>收藏
   </view>
-      <view class="cu-modal {{modalName=='CollectModal'?'show':''}}" bindtap="hideModal">
-      <view class="cu-dialog" >
-        <radio-group class="block">
-          <view class="cu-list menu text-left">
-            <view class="cu-item" wx:for="{{userBookSet_arr}}"catchtap="chooseSet" wx:key data-id="{{item.bookSetId}}">
+
+<view class="cu-modal {{modalName=='DialogModal2'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">收藏/取消收藏</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text> 
+      </view>
+    </view>
+    <view class="padding-xl">
+      <scroll-view scroll-y="true" style="height: {{height}}rpx;">
+        <checkbox-group >
+          <view class="checkbox" wx:for="{{userBookSet_arr}}" bindtap="chooseSet" data-id="{{index}}">
+            <view class="cu-form-group">
               <label class="flex justify-between align-center flex-sub">
-                <view class="flex-sub">{{item.bookSetName}}</view>
-                <radio class="round"></radio>
+                <view class="flex-sub">{{item.setName}}</view>
+                <checkbox class="round"  checked="{{item.checked}}" />
               </label>
             </view>
           </view>
-        </radio-group>
-      </view>
+        </checkbox-group>
+      </scroll-view>
     </view>
+    <view class="cu-bar bg-white">
+      <view class="action margin-0 flex-sub text-green solid-left" bindtap="hideModal">取消</view>
+      <view class="action margin-0 flex-sub  solid-left" bindtap="confirmChoose">确定</view>
+    </view>
+  </view>
+</view>
 
-    <view class="action">
-      <text class="cuIcon-comment" bindtap="comment"></text>
-      <view class="text-gray">评论</view>
-    </view>
-    <view class="action">
-      <text class="cuIcon-writefill" bindtap="makeNote"></text>
-      <view class="text-gray">笔记</view>
-    </view>
+  <view class="action text-gray">
+    <view class="cuIcon-comment" bindtap="comment"></view> 评论
+  </view>
+  <view class="action text-gray">
+    <view class="cuIcon-writefill" bindtap="makeNote"></view> 笔记
   </view>
 </view>

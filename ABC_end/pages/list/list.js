@@ -5,11 +5,15 @@ Page({
    * 页面的初始数据
    */
   data: {
-    open_id: 1,
+    session_id: 3,
     type: '', //用户点击的集合类型:B/W/Q/N
-    setId: '',
+    setId: 1,
     setName: '', //用户点击的集合名字
-
+    pageW: 0,
+    pageB:0,
+    pageN:0,
+    pageQ:0,
+    flag: true,//是否触底全部加载完成
     // isBookSetCollected: false,
     // isWordSetCollected: false,
     // isQuestionSetCollected: false,
@@ -98,6 +102,7 @@ Page({
         lastEditTime: '2020-3-21'
       }
     ], //如果点击的是题集，则把题目列表放进该数组
+    question_set_id:[],
     notes_arr: [{
         noteId: '1',
         creatorId: '1',
@@ -119,16 +124,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    console.log("这是onload中的options")
     console.log(options);
-    // var cur_type = options.type;
-    // var setId = options.setId;
-    // var setName = options.setName;
+     var cur_type = options.type;
+     var setId = options.setId;
+     var setName = options.setName;
     //console.log(type);
-
-    this.setData({
-      type: options.type,
-      setId: options.setId,
-      setName: options.setName
+    var that=this;
+    that.setData({
+      type: cur_type,
+      setId: setId,
+      setName: setName
     })
     console.log('chabc: ' + this.data.type + this.data.setId + this.data.setName);
     var that = this;
@@ -155,16 +161,24 @@ Page({
 
   showBookList: function() {
     var that = this;
+    wx.showLoading({
+      title: 'loading',
+    })
     var setId = that.data.setId;
     var setName = that.data.setName;
+    var page=that.data.pageB+1
+    that.setData({
+      pageB:page
+    })
     console.log('调用showBookList:' + that.data.setName);
     console.log('http://localhost:8080/book_set_list?set_id=' + setId)
     wx.request({
-      url: 'http://localhost:8080/book_set_list?set_id=' + setId ,
+      url: 'http://localhost:8080/book_set_list?set_id=' + setId+'&page='+that.data.pageB ,
       success: function(res) {
         that.setData({
           books_arr: res.data
         })
+        wx.hideLoading();
       }
     })
     console.log(that.data.books_arr)
@@ -172,45 +186,92 @@ Page({
 
   showWordList: function() {
     var that = this;
+    wx.showLoading({
+      title: 'loading',
+    })
     var setId = that.data.setId;
     var setName = that.data.setName;
+    var cur_page = this.data.pageW + 1
+    this.setData({
+      pageW: cur_page
+    })
     console.log('调用showWordList:' + that.data.setId);
+    console.log('http://localhost:8080/word_set_list?set_id=' + setId)
     wx.request({
-      url: 'http://localhost:8080/word_set_list?set_id=' + setId ,
+      url: 'http://localhost:8080/word_set_list?set_id=1&page='+that.data.pageW, //+ setId ,
+      data: {
+
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      method: 'GET',
       success: function(res) {
-        that.setData({
-          words_arr: res.data
-        })
+       console.log(res.data)
+        if (res.data != '') {
+          that.setData({
+            words_arr: res.data,
+          })
+          wx.hideLoading();
+        }
+        else {
+          wx.showToast({
+            title: '没有更多数据！'
+          })
+          that.setData({
+            flag: false
+          })
+        }
       }
     })
+    console.log("单词")
+    console.log(this.data.words_arr)
   },
 
   showQuestionList: function() {
     var that = this;
+    wx.showLoading({
+      title: 'loading',
+    })
     var setId = that.data.setId;
     var setName = that.data.setName;
+    var page=that.data.pageQ+1
+    that.setData({
+      pageQ:page
+    })
     console.log('调用showQuestionList:' + that.data.setName);
+    console.log('http://localhost:8080/question_set?set_id=' + setId+'&page=' + that.data.pageQ)
     wx.request({
-      url: 'http://localhost:8080/question_set?set_id=' + setId ,
+      url: 'http://localhost:8080/question_set?set_id=' + setId+'&page='+that.data.pageQ ,
       success: function(res) {
         that.setData({
           questions_arr: res.data
         })
+        wx.hideLoading();
       }
     })
+    console.log(this.data.questions_arr)
   },
 
   showNoteList: function() {
     var that = this;
+    wx.showLoading({
+      title: 'loading',
+    })
     var setId = that.data.setId;
     var setName = that.data.setName;
+    var page=that.data.pageN+1
+    that.setData({
+      pageN:page
+    })
     console.log('调用showNoteList:' + that.data.setName);
     wx.request({
-      url: 'http://localhost:8080/note_set?set_id=' + setId,
+      url: 'http://localhost:8080/note_set?set_id=' + setId+'&page='+that.data.pageN,
       success: function(res) {
         that.setData({
           notes_arr: res.data
         })
+        wx.hideLoading();
       }
     })
   },
@@ -225,7 +286,7 @@ Page({
           method:'POST',
           data:{
             'type':that.data.type,
-            'open_id':that.data.open_id,
+            'session_id':that.data.session_id,
             'set_id':that.data.setId,
             'op':1
           },
@@ -263,6 +324,38 @@ Page({
     })
 
   },
+
+  toQuestionDetail:function(e){
+    var questionid = e.currentTarget.dataset.itemid
+    console.log("进入questionset详情")
+    console.log("获得题号"+questionid)
+    console.log("题集"+this.data.setId)
+    var that=this
+    // var set_id=[]
+    // var i=0
+    // while(that.data.questions_arr[i].questionId!=0)
+    // {
+    //   set_id, push(that.data.questions_arr[i].questionId)
+    // }
+
+    // console(set_id)
+    // that.setData({
+    //   question_set_id:set_id
+    // })
+    wx.navigateTo({
+      // url:'../bookSet/bookSet?type=B'+'&bookSetId='+bookSetId+'&bookSetName='+bookSetName,
+      url: '../question/question?type=Q&questionId=' + questionid +'&questionSet='+this.data.setId,
+    })
+
+
+  },
+  // toNote:function(e){
+  //   var note_id=e.currentTarget.dataset.item
+  //   wx.navigateTo({
+  //     // url:'../bookSet/bookSet?type=B'+'&bookSetId='+bookSetId+'&bookSetName='+bookSetName,
+  //     url: '../note/note?noteId=' + noteId,
+  //   })
+  // },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -303,6 +396,27 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
+    var that = this;
+    if (that.data.flag == false)
+      return
+    if (that.data.type == 'B') {
+      console.log("这是书单")
+      that.showBookList()
+    }
+    if (that.data.type == 'W') {
+      console.log("这是词集")
+      that.showWordList()
+    }
+
+    if (that.data.type == 'Q') {
+      console.log("这是题集")
+      that.showQuestionList()
+    }
+
+    if (that.data.type == 'N') {
+      console.log("这是笔记集")
+      that.showNoteList()
+    }
 
   },
 

@@ -5,6 +5,9 @@ Page({
    * 页面的初始数据
    */
   data: {
+    flag:true,
+    page:0,
+    book_ids:'',
     index: null,//升序是1，降序是0
     picker: ['降序', '升序'],
     //从服务器返回的数据放进vocabulary数组中，然后按照每一个数组元素的属性在界面上进行渲染
@@ -36,7 +39,7 @@ Page({
     // })
     console.log("?????" + e.currentTarget.dataset.item)
     wx.navigateTo({
-      url: '../wordDetail/wordDetail?word_id=' + JSON.stringify(e.currentTarget.dataset.item)//、e.currentTarget
+      url: '../wordDetail/wordDetail?word_id=' + JSON.stringify(e.currentTarget.dataset.item) + '&book_id=' + this.data.book_ids//、e.currentTarget
     })
   },
 
@@ -45,7 +48,10 @@ Page({
  */
 
 startToPractice:function(){
-  
+  wx.navigateTo({
+    // url:'../bookSet/bookSet?type=B'+'&bookSetId='+bookSetId+'&bookSetName='+bookSetName,
+    url: '../question/question?type=QL&nookId=' + this.data.book_ids,
+  })
 },
 
   /**
@@ -54,15 +60,61 @@ startToPractice:function(){
   onLoad: function (options) {
     var book_id=options.book_id
     var self = this
-    console.log("bookid?????:"+book_id)
-    // var order
-    // if(this.data.index==0)
-    //   order='DESC';
-    // else
-    //   order='ASC'; 
-    // console.log("这是oder:"+order)   
+    self.setData({
+      book_ids:book_id
+    })
+    // console.log("bookid?????:"+book_id)
+    // // var order
+    // // if(this.data.index==0)
+    // //   order='DESC';
+    // // else
+    // //   order='ASC'; 
+    // // console.log("这是oder:"+order)   
+    // wx.request({
+    //   url: 'http://localhost:8080/word_inBook?book_id='+book_id+'&page='+1,
+    //   data: {
+
+    //   },
+    //   header: {
+    //     'content-type': 'application/json'
+    //   },
+    //   method: 'GET',
+    //   success: function (res) {
+    //     console.log(res.data);
+    //     self.setData({
+    //       vocabulary: res.data
+    //     })
+
+    //   }
+    // })
+    console.log("这是book下的单词")
+    console.log(this.data.vocabulary)
+    self.getMsg()
+  },
+  onReachBottom: function () {
+    var that = this;
+    // 显示加载图标
+    if(that.data.flag==true)
+    that.getMsg()
+    else
+    return
+  },
+  getMsg:function()
+  {
+    wx.showLoading({
+      title: 'loading',
+    })
+    console.log("测试，onload能不能调用啊")
+    console.log("bookid?????:" + this.data.book_ids)
+    
+    var cur_page=this.data.page+1
+    this.setData({
+      page: cur_page 
+    })
+    console.log("现在的页数："+cur_page)
+    var self=this
     wx.request({
-      url: 'http://localhost:8080/word_inBook?book_id='+book_id,
+      url: 'http://localhost:8080/word_inBook?book_id=' + self.data.book_ids + '&page=' + cur_page,
       data: {
 
       },
@@ -72,15 +124,34 @@ startToPractice:function(){
       method: 'GET',
       success: function (res) {
         console.log(res.data);
+        if(res.data!=''){
         self.setData({
           vocabulary: res.data
         })
-
+        wx.hideLoading();
+      }
+      else
+      {
+          wx.showToast({
+            title: '没有更多数据！'
+          })
+          self.setData({
+            flag:false
+          })
+      }
       }
     })
-    console.log("这是book下的单词")
-    console.log(this.data.vocabulary)
-
+  },
+  Tocomment: function (e) {
+    var to_id = e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: '../comment/comment?to_id=' + this.data.book_ids,
+    })
+  },
+  makeNote: function () {
+    wx.navigateTo({
+      url: '../note/note',
+    })
   },
 
   /**
@@ -121,9 +192,7 @@ startToPractice:function(){
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
-
-  },
+ 
 
   /**
    * 用户点击右上角分享

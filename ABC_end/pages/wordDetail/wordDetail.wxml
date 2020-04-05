@@ -22,30 +22,45 @@
 </view>
 
 <!-- 底部操作条 -->
-<view class="box">
-  <view class="cu-bar tabbar bg-white foot">
-    <view class="action">
-      <picker bindchange="PickerChange" value="{{index}}" range="{{picker}}">
-        <view class="picker">
-          <!-- {{index?picker[index]:'禁止换行，超出容器部分会以 ... 方式截断'}} -->
-          <!-- <button class="cu-btn bg-grey">收藏</button> -->
-          <text class="cuIcon-like"></text>
-          <view class="text-grey">收藏</view>
-        </view>
-      </picker>
+
+<view class="cu-bar tabbar bg-white foot">
+  <view class="action text-grey" bindtap="collect" data-target="CollectModal">
+    <view class="cuIcon-favor"></view> 收藏
+  </view>
+<view class="cu-modal {{modalName=='DialogModal2'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">收藏/取消收藏</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text> 
+      </view>
     </view>
-    <view class="action">
-      <text class="cuIcon-comment" bindtap="comment"></text>
-      <view class="text-gray">评论</view>
+    <view class="padding-xl">
+      <scroll-view scroll-y="true" style="height: {{height}}rpx;">
+        <checkbox-group >
+          <view class="checkbox" wx:for="{{userWordSet_arr}}" bindtap="chooseSet" data-id="{{index}}">
+            <view class="cu-form-group">
+              <label class="flex justify-between align-center flex-sub">
+                <view class="flex-sub">{{item.setName}}</view>
+                <checkbox class="round"  checked="{{item.checked}}" />
+              </label>
+            </view>
+          </view>
+        </checkbox-group>
+      </scroll-view>
     </view>
-    <view class="action">
-      <text class="cuIcon-writefill" bindtap="makeNote"></text>
-      <view class="text-gray">笔记</view>
+    <view class="cu-bar bg-white">
+      <view class="action margin-0 flex-sub text-green solid-left" bindtap="hideModal">取消</view>
+      <view class="action margin-0 flex-sub  solid-left" bindtap="confirmChoose">确定</view>
     </view>
-    <view class="action">
-      <text class="cuIcon-edit" bindtap="practice"></text>
-      <view class="text-gray">练习</view>
-    </view>
+  </view>
+</view>
+
+  <view class="action text-gray">
+    <view class="cuIcon-writefill" bindtap="makeNote"></view>笔记
+  </view>
+  <view class="action text-gray">
+    <view class="cuIcon-edit" bindtap="practice"></view>练习
   </view>
 </view>
 

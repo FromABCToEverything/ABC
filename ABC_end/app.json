@@ -10,7 +10,9 @@
     "pages/question/question",
     "pages/comment/comment",
     "pages/user/user",
-    "pages/note/note"
+    "pages/note/note",
+    "pages/userlist/userlist",
+    "pages/tologin/toloign"
   ],
   "window": {
     "backgroundTextStyle": "light",

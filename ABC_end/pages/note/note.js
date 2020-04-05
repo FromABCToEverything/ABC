@@ -2,7 +2,7 @@
 Page({
   data: {
     note:'',
-    open_id:1,
+    session_id:3,
     content: '',
 
 
@@ -11,13 +11,32 @@ Page({
     this.setData({
       title: e.detail.value
     })
-    console.log(this.data.title);
+    console.log(this.data.title+"这是评论标题");
   },
   noteInput:function(e){
     this.setData({
       content: e.detail.value
     })
-    console.log(this.data.content);
+    console.log(this.data.content+"这是评论内容");
+  },
+  commit:function(){
+    var that = this;
+    wx.request({
+      url: 'http://localhost:8080/note?title='+that.data.title+'&content='+that.data.content,
+      method: 'POST',
+      data: {
+        
+      },
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      success: function (res) {
+        console.log(res.data);
+        wx.showModal({
+          title: '提交成功'
+        })
+      }
+    })
   },
   /**
    * 生命周期函数--监听页面加载

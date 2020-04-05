@@ -1,17 +1,18 @@
 <!--pages/user/user.wxml-->
+<!--pages/user/user.wxml-->
 <cu-custom bgColor="bg-gradual-green" isBack="{{true}}">
   <view slot="backText">返回</view>
   <view slot="content">我的主页</view>
 </cu-custom>
 <view class="cu-list menu-avatar">
   <view class="cu-item">
-    <view class="cu-avatar xl round" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);"></view>
+    <view class="cu-avatar xl round" style="background-image:url({{userInfo.avatarUrl}});"></view>
     <view class="content flex-sub">
-      <view class="text-black text-xl margin-left">用户名</view>
+      <view class="text-black text-xl margin-left">{{userInfo.nickName}}</view>
       <view class="text-gray text-sm flex justify-between margin-left margin-top">
-        用户id
+        {{userInfo.gender}}
         <view class="text-gray text-sm">
-          <text>贡献</text>
+          <text>{{userInfo.language}}</text>
           <text class="cuIcon-hotfill margin-lr-xs"></text> 10
         </view>
       </view>
@@ -31,3 +32,101 @@
   </view>
 </scroll-view>
 <!-- 使用colorui里的表单元素对用户的收藏集合和创建集合进行显示和管理 -->
+
+<view class="cu-bar bg-white margin-top">
+  <view class="action">
+    <text class="cuIcon-title text-orange "></text>用户创建
+  </view>
+  <view class="action">
+    <button class="cu-btn bg-green shadow" bindtap="showModal" data-target="DialogModal">新建</button>
+  </view>
+</view>
+<view class="cu-modal {{modalName=='DialogModal'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">请输入名称</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <!-- <view class="padding-xl">
+      Modal 内容。
+    </view> -->
+    <view class="cu-item bg-white padding-sm">
+      <input type="text" placeholder="输入集合名" confirm-type="done" bindblur="inputBlur" focus="{{true}}" value="{{setTitle}}"></input>
+      <view class="cu-list menu text-left solid-top">
+        <view class="cu-item">
+          <view class="content">
+            <text class="text-grey">设为私人集合？</text>
+          </view>
+          <view class="action">
+            <switch bindchange="setPrivate"></switch>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="cu-bar bg-white justify-end">
+      <view class="action">
+        <button class="cu-btn line-green text-green" bindtap="hideModal">取消</button>
+        <button class="cu-btn bg-green margin-left" bindtap="confirm">确定</button>
+
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="cu-item bg-white padding solid-bottom" wx:if="{{tab_cur_name=='B'}}" wx:for="{{create_book_set}}" data-setid="{{item.setId}}" bindtouchstart="touchStart" bindtouchend="touchEnd" bindtap="pressTap">
+  <view class="content">
+    <text class="text-grey">{{item.setName}}</text>
+  </view>
+</view>
+
+<view class="cu-item bg-white padding solid-bottom" wx:if="{{tab_cur_name=='W'}}" wx:for="{{create_word_set}}" data-setid="{{item.setId}}" bindtouchstart="touchStart" bindtouchend="touchEnd" bindtap="pressTap">
+  <view class="content">
+    <text class="text-grey">{{item.setName}}</text>
+  </view>
+</view>
+
+<view class="cu-item bg-white padding solid-bottom" wx:if="{{tab_cur_name=='Q'}}" wx:for="{{create_question_set}}" data-setid="{{item.setId}}" bindtouchstart="touchStart" bindtouchend="touchEnd" bindtap="pressTap">
+  <view class="content">
+    <text class="text-grey">{{item.setName}}</text>
+  </view>
+</view>
+
+<view class="cu-item bg-white padding solid-bottom" wx:if="{{tab_cur_name=='N'}}" wx:for="{{create_note_set}}" data-setid="{{item.setId}}" bindtouchstart="touchStart" bindtouchend="touchEnd" bindtap="pressTap">
+  <view class="content">
+    <text class="text-grey">{{item.setName}}</text>
+  </view>
+</view>
+
+<view class="cu-bar bg-white margin-top">
+  <view class="action">
+    <text class="cuIcon-title text-orange "></text>用户收藏
+  </view>
+</view>
+
+<view class="cu-item bg-white padding solid-bottom" wx:if="{{tab_cur_name=='B'}}" wx:for="{{collect_book_set}}" data-setid="{{item.bookSetId_col}}" bindtap="toList">
+  <view class="content">
+    <text class="text-grey">{{item.bookSetName_col}}</text>
+  </view>
+</view>
+
+<view class="cu-item bg-white padding solid-bottom" wx:if="{{tab_cur_name=='W'}}" wx:for="{{collect_word_set}}" data-setid="{{item.wordSetId_col}}" bindtap="toList">
+  <view class="content">
+    <text class="text-grey">{{item.wordSetName_col}}</text>
+  </view>
+</view>
+
+
+<view class="cu-item bg-white padding solid-bottom" wx:if="{{tab_cur_name=='Q'}}" wx:for="{{collect_question_set}}" data-setid="{{item.questionSetId_col}}" bindtap="toList">
+  <view class="content">
+    <text class="text-grey">{{item.questionSetName_col}}</text>
+  </view>
+</view>
+
+
+<view class="cu-item bg-white padding solid-bottom" wx:if="{{tab_cur_name=='N'}}" wx:for="{{collect_note_set}}" data-setid="{{item.noteSetId_col}}" bindtap="toList">
+  <view class="content">
+    <text class="text-grey">{{item.noteSetName_col}}</text>
+  </view>
+</view>

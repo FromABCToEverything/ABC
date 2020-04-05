@@ -1,6 +1,13 @@
 // pages/search/search.js
 Page({
   data: {
+    pageb:0,
+    pageq: 0,
+    pageB: 0,
+    pageW: 0,
+    pageQ: 0,
+    pageN: 0,
+    flag: true,//是否触底全部加载完成
     hidden: false,
     searched:false,
     keyword: '',
@@ -56,6 +63,7 @@ Page({
       //   publicatedDate: '2001-12-01'
       // },
     ],
+    question_arr_id:[],
     question_arr:[
       // {
       //   questionId:1,
@@ -242,11 +250,19 @@ Page({
   
   choiceb:function()
   {
+    // wx.showLoading({
+    //   title: 'loading',
+    // })
     console.log("这是b的request")
     console.log("这是choiceb")
+    var cur_page = this.data.pageb + 1
+    this.setData({
+      page: cur_page
+    })
     var self = this
+    
     wx.request({
-      url: 'http://localhost:8080/search/book?keyword=' +  self.data.keyword + '&sort=' + self.data.sort + '&order=' + self.data.order,
+      url: 'http://localhost:8080/search/book?keyword=' + self.data.keyword + '&sort=' + self.data.sort + '&order=' + self.data.order + '&currentPage=' + cur_page,
       data: {
 
       },
@@ -256,10 +272,20 @@ Page({
       method: 'GET',
       success(res) {
         console.log(res.data);
+        if (res.data != ''){
         self.setData({
           book_arr: res.data,
         })
-
+          //wx.hideLoading();
+      }
+        else {
+          wx.showToast({
+            title: '没有更多数据！'
+          })
+          self.setData({
+            flag: false
+          })
+        }
       }
     })
     console.log(that.dat.book_arra)
@@ -267,11 +293,18 @@ Page({
 
   choiceB:function()
   {
+    // wx.showLoading({
+    //   title: 'loading',
+    // })
     console.log("这是B的request")
+    var cur_page = this.data.pageB + 1
+    this.setData({
+      page: cur_page
+    })
     console.log('http://localhost:8080/search/book?keyword=' + this.data.keyword + '&sort=' + this.data.sort + '&order='+this.data.order)
     var self = this
     wx.request({
-      url: 'http://localhost:8080/search/book_set?keyword='+self.data.keyword+'&sort='+self.data.sort+'&order=' + self.data.order,
+      url: 'http://localhost:8080/search/book_set?keyword=' + self.data.keyword + '&sort=' + self.data.sort + '&order=' + self.data.order + '&currentPage=' + cur_page,
      
       data: {
 
@@ -282,12 +315,21 @@ Page({
       method: 'GET',
       
       success(res) {
-        console.log("这是res的数据")
         console.log(res.data);
-        self.setData({
-          book_set_arr: res.data,
-        })
-
+        if (res.data != '') {
+          self.setData({
+            book_set_arr: res.data,
+          })
+          //wx.hideLoading();
+        }
+        else {
+          wx.showToast({
+            title: '没有更多数据！'
+          })
+          self.setData({
+            flag: false
+          })
+        }
       }
     })
     //console.log(url)
@@ -296,10 +338,19 @@ Page({
   },
   choicequestion:function()
   {
+    // wx.showLoading({
+    //   title: 'loading',
+    // })
     console.log("这是q的request")
+    var cur_page = this.data.pageq + 1
+    this.setData({
+      page: cur_page
+    })
+    //console.log("现在的页数"+page)
+    console.log("现在的cur_name"+this.data.tab_cur_name)
     var self = this
     wx.request({
-      url: 'http://localhost:8080/search/question?keyword=' +  self.data.keyword + '&sort=' + self.data.sort + '&order=' + self.data.order,
+      url: 'http://localhost:8080/search/question?keyword=' + self.data.keyword + '&sort=' + self.data.sort + '&order=' + self.data.order +'&currentPage='+cur_page,
       data: {
 
       },
@@ -310,19 +361,42 @@ Page({
 
       success(res) {
         console.log(res.data);
-        self.setData({
-          question_arr: res.data,
-        })
-
+        if (res.data != '') {
+          self.setData({
+            question_arr: res.data,
+          })
+          //wx.hideLoading();
+        }
+        else {
+          wx.showToast({
+            title: '没有更多数据！'
+          })
+          self.setData({
+            flag: false
+          })
+        }
       }
     })
+    // for(question in question_arr)
+    // {
+    //   this.setData({
+    //     question_arr_id:question.questionId
+    //   })
+    // }
   },
   choiceN:function()
   {
+    // wx.showLoading({
+    //   title: 'loading',
+    // })
     console.log("这是N的request")
+    var cur_page = this.data.pageN + 1
+    this.setData({
+      page: cur_page
+    })
     var self = this
     wx.request({
-      url: 'http://localhost:8080/search/note?keyword='+  self.data.keyword + '&sort=' + self.data.sort + '&order=' + self.data.order,
+      url: 'http://localhost:8080/search/note?keyword=' + self.data.keyword + '&sort=' + self.data.sort + '&order=' + self.data.order + '&currentPage=' + cur_page,
       data: {
 
       },
@@ -333,19 +407,37 @@ Page({
 
       success(res) {
         console.log(res.data);
-        self.setData({
-          note_set_arr: res.data,
-        })
-
+        if (res.data != '') {
+          self.setData({
+            note_set_arr: res.data,
+          })
+         // wx.hideLoading();
+        }
+        else {
+          wx.showToast({
+            title: '没有更多数据！'
+          })
+          self.setData({
+            flag: false
+          })
+        }
       }
     })
+
   },
   choiceQ:function()
   {
+    // wx.showLoading({
+    //   title: 'loading',
+    // })
     console.log("这是Q的request")
+    var cur_page = this.data.pageQ + 1
+    this.setData({
+      page: cur_page
+    })
     var self = this
     wx.request({
-      url: 'http://localhost:8080/search/question_set?keyword='+  self.data.keyword + '&sort=' + self.data.sort + '&order=' + self.data.order,
+      url: 'http://localhost:8080/search/question_set?keyword=' + self.data.keyword + '&sort=' + self.data.sort + '&order=' + self.data.order + '&currentPage=' + cur_page,
       data: {
 
       },
@@ -356,19 +448,36 @@ Page({
 
       success(res) {
         console.log(res.data);
-        self.setData({
-          question_set_arr: res.data,
-        })
-
+        if (res.data != '') {
+          self.setData({
+            question_set_arr: res.data,
+          })
+         // wx.hideLoading();
+        }
+        else {
+          wx.showToast({
+            title: '没有更多数据！'
+          })
+          self.setData({
+            flag: false
+          })
+        }
       }
     })
   },
   choiceW:function()
   {
+    // wx.showLoading({
+    //   title: 'loading',
+    // })
     console.log("这是W的request")
+    var cur_page = this.data.pageW + 1
+    this.setData({
+      page: cur_page
+    })
     var self = this
     wx.request({
-      url: 'http://localhost:8080/search/word?keyword=' +  self.data.keyword + '&sort=' + self.data.sort + '&order=' + self.data.order,
+      url: 'http://localhost:8080/search/word?keyword=' + self.data.keyword + '&sort=' + self.data.sort + '&order=' + self.data.order + '&currentPage=' + cur_page,
       data: {
 
       },
@@ -379,10 +488,20 @@ Page({
 
       success(res) {
         console.log(res.data);
-        self.setData({
-          word_set_arr: res.data,
-        })
-
+        if (res.data != '') {
+          self.setData({
+            word_set_arr: res.data,
+          })
+         // wx.hideLoading();
+        }
+        else {
+          wx.showToast({
+            title: '没有更多数据！'
+          })
+          self.setData({
+            flag: false
+          })
+        }
       }
     })
   },
@@ -436,8 +555,9 @@ Page({
     var type = e.currentTarget.dataset.type;
     var setId = e.currentTarget.dataset.itemid;
     var setName = e.currentTarget.dataset.questionsetname;
+    console.log("进入questionlist"+setId)
     wx.navigateTo({
-      url: '../list/list?type=Q' + '& setId=' + setId + '& setName=' + setName,
+      url: '../list/list?type=Q' + '&setId=' + setId + '&setName=' + setName,
     })
   },
 
@@ -450,7 +570,7 @@ Page({
     var setId = e.currentTarget.dataset.itemid;
     var setName = e.currentTarget.dataset.notesetname;
     wx.navigateTo({
-      url: '../list/list?type=N' + '& setId=' + setId + '& setName=' + setName,
+      url: '../list/list?type=N' + '&setId=' + setId + '&setName=' + setName,
     })
   },
   /**
@@ -459,9 +579,10 @@ Page({
   toQuestionDetail:function(e){
     var id=e.currentTarget.dataset.item
     console.log("这是题号"+id)
+    console.log("题号数组" + this.data.question_arr_id)
 
    wx.navigateTo({
-     url: '../question/question?setId='+id,
+     url: '../question/question?type=q&setId='+id+'&questionSet='+this.data.question_arr_id,
    })
   },
   /**
@@ -510,7 +631,46 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    var that = this;
+    // 显示加载图标
+    console.log("触发了触底函数")
+    //var tab_cur = this.data.tab_cur_name;
+    var tab_cur='q'
+    console.log(tab_cur)
+    if(that.data.flag==false)
+    return
+    else{
+    if (tab_cur == 'b')  //book
+    {
+      console.log("type" + tab_cur)
+      that.choiceb()
+    }
+    if (tab_cur == 'B')  //book_set
+    {
+      console.log("type" + tab_cur)
+      that.choiceB()
+    }
+    if (tab_cur == 'q')  //question
+    {
+      console.log("type" + tab_cur)
+      that.choicequestion()
+    }
+    if (tab_cur == 'N')  //note
+    {
+      console.log("type" + tab_cur)
+      that.choiceN()
+    }
+    if (tab_cur == 'Q')  //question_set
+    {
+      console.log("type" + tab_cur)
+      that.choiceQ()
+    }
+    if (tab_cur == 'W')  //word_set
+    {
+      console.log("type" + tab_cur)
+      that.choiceW()
+    }
+    }
   },
 
   /**
