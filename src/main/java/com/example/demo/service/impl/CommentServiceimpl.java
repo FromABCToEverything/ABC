@@ -12,8 +12,8 @@ public class CommentServiceimpl implements CommentService {
     @Autowired
     private CommentMapper comment;
     @Override
-    public List<CommentEntity> search_comment(String type, int to_id) {
-        List<CommentEntity> list=comment.search_comment(type, to_id);
+    public List<CommentEntity> search_comment(String type, int to_id,int page) {
+        List<CommentEntity> list=comment.search_comment(type, to_id,page);
         return list;
     }
 

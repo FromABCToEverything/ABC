@@ -14,9 +14,15 @@ public class NoteServiceimpl implements NoteService {
     @Autowired
     private NoteMapper note;
     @Override
-    public List<NoteEntity> findNote(int entry_id) {
-        List<NoteEntity> list= note.findNote(entry_id);
+    public List<NoteEntity> findNote(int set_id,int index) {
+        List<NoteEntity> list= note.findNote(set_id,index);
         return list;
+    }
+
+    @Override
+    public int insertNote( String title, String content) {
+        int op=note.insertNote( title, content);
+        return op;
     }
 
 }

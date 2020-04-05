@@ -1,6 +1,7 @@
 package com.example.demo;
 
 //import com.example.demo.config.SpringUtil;
+import com.example.demo.component.ExitComponent;
 import com.example.demo.entity.SessionEntity;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.mapper.SessionMapper;
@@ -22,6 +23,7 @@ import org.thymeleaf.spring5.context.SpringContextUtils;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -32,6 +34,7 @@ public class DemoApplication {
     @Autowired
     //public static SqlSession sqlSession;
     public SessionMapper sessionMapper;
+    public ExitComponent exit;
     public static DualHashBidiMap sessionMap = new DualHashBidiMap();
     public static DemoApplication demo;
     @PostConstruct
@@ -50,25 +53,33 @@ public class DemoApplication {
         for (SessionEntity User : list) {
             sessionMap.put(User.getSessionId(), User.getOpenId());
         }
+        System.out.println(list.get(1).getOpenId());
         System.out.println("这是在设置map中数据");
     }
 //    }
     @PreDestroy
     public static void exit(){
         MapIterator map=sessionMap.mapIterator();
+
+        String sql="insert into session (open_id,session_id) values ";
         while (map.hasNext())
         {
-            String session= (String) map.getKey();
+            String session_id= (String) map.next();
             String open_id= (String) map.getValue();
-            demo.sessionMapper.resetSession(session,open_id);
+            sql+=String.format("('%s','%s'),", open_id,session_id);
+
         }
+        //去掉末尾逗号
+        sql=sql.substring(0,sql.length()-1);
+        demo.sessionMapper.resetSession(sql);
         System.out.println("把数据写回session");
 
     }
 
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
-        //getUser();
+        //exit.exit();
+        getUser();
         //exit();
         //待实现
         //程序将要退出前，将sessionMap里的内容写回session表

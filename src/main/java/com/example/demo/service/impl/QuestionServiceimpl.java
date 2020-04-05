@@ -71,8 +71,8 @@ public class QuestionServiceimpl implements QuestionService {
     }
 
     @Override
-    public List<QuestionSetEntity> question_set(int set_id) {
-        return question.question_set(set_id);
+    public List<QuestionEntity> question_set(int set_id,int index) {
+        return question.question_set(set_id,index);
     }
 
     @Override

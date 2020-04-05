@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.dto.myBookSetDto;
 import com.example.demo.entity.*;
 import com.example.demo.mapper.CollectMapper;
 import com.example.demo.service.CollectService;
@@ -7,42 +8,45 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.swing.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @Service
 public class CollectServiceimpl implements CollectService {
     @Autowired
     private CollectMapper collect;
     @Override
-    public Object showCollect_other(String open_id, String type,String type_set, String type_map) {
+    public Object showCollect_other(String open_id, String type,String type_set, int page) {
         if(type.equals("W"))
-            return collect.showCollect_otherW(open_id,type,type_set,type_map);
+            return collect.showCollect_otherW(open_id,type,type_set,page);
         else if(type.equals("B"))
-            return collect.showCollect_otherB(open_id,type,type_set,type_map);
+            return collect.showCollect_otherB(open_id,type,type_set,page);
        else if(type.equals("Q"))
-            return collect.showCollect_otherQ(open_id,type,type_set,type_map);
+            return collect.showCollect_otherQ(open_id,type,type_set,page);
         else if(type.equals("N"))
-            return collect.showCollect_otherN(open_id,type,type_set,type_map);
+            return collect.showCollect_otherN(open_id,type,type_set,page);
         return 0;
     }
 
     @Override
-    public List<BookSetEntity> showCollect_selfB(String open_id) {
-        return collect.showCollect_selfB(open_id);
+    public List<BookSetEntity> showCollect_selfB(String open_id,int index) {
+        return collect.showCollect_selfB(open_id,index);
     }
 
     @Override
-    public List<WordSetEntity> showCollect_selfW(String open_id) {
-        return collect.showCollect_selfW(open_id);
+    public List<WordSetEntity> showCollect_selfW(String open_id,int index) {
+        return collect.showCollect_selfW(open_id,index);
     }
 
     @Override
-    public List<QuestionSetEntity> showCollect_selfQ(String open_id) {
-        return collect.showCollect_selfQ(open_id);
+    public List<QuestionSetEntity> showCollect_selfQ(String open_id,int index) {
+        return collect.showCollect_selfQ(open_id,index);
     }
 
     @Override
-    public List<NoteSetEntity> showCollect_selfN(String open_id) {
-        return collect.showCollect_selfN(open_id);
+    public List<NoteSetEntity> showCollect_selfN(String open_id,int index) {
+        return collect.showCollect_selfN(open_id,index);
     }
 
 
@@ -77,7 +81,7 @@ public class CollectServiceimpl implements CollectService {
     }
 
     @Override
-    public int insert_check_self(String type_set, int creator_id, String set_name, String creator_name, Spring private01) {
+    public int insert_check_self(String type_set, String creator_id, String set_name, String creator_name, Spring private01) {
         int op=collect.insert_check_self(type_set, creator_id, set_name, creator_name, private01);
         if(op!=0)
             op=1;
@@ -94,5 +98,22 @@ public class CollectServiceimpl implements CollectService {
         else
             op=0;
         return op;
+    }
+
+    @Override
+    public List<myBookSetDto> collect_element(String type,int entry_id, String open_id) {
+        List<myBookSetDto> list = null;
+        if(type.equals("b"))
+            list=collect.collect_book(entry_id, open_id);
+        else if(type.equals("w"))
+            list=collect.collect_word(entry_id, open_id);
+        else if(type.equals("q"))
+           list=collect.collect_question(entry_id, open_id);
+        return list;
+    }
+
+    @Override
+    public String if_collect_other(String type, int entry_id, String open_id) {
+        return collect.if_collect_other(type, entry_id, open_id);
     }
 }

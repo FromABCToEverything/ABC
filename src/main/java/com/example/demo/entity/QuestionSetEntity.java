@@ -15,6 +15,7 @@ public class QuestionSetEntity {
     private Timestamp lastEditTime;
     private int collectedTimes;
     private String personal;
+    private Byte collected;
 
     @Id
     @Column(name = "set_id", nullable = false)
@@ -138,5 +139,15 @@ public class QuestionSetEntity {
         result = 31 * result + collectedTimes;
         result = 31 * result + (personal != null ? personal.hashCode() : 0);
         return result;
+    }
+
+    @Basic
+    @Column(name = "collected", nullable = true)
+    public Byte getCollected() {
+        return collected;
+    }
+
+    public void setCollected(Byte collected) {
+        this.collected = collected;
     }
 }

@@ -19,8 +19,11 @@ public interface NoteMapper {
             "\tON \n" +
             "\t\tnote.note_id = note_set_map.entry_id\n" +
             "WHERE\n" +
-            "\tnote_set_map.set_id = #{set_id}")
-    List<NoteEntity> findNote(int set_id);
+            "\tnote_set_map.set_id = #{set_id} " +
+            "limit 20 offset #{index}")
+    List<NoteEntity> findNote(int set_id,int index);
     //要加一个post 笔记的
     //@Insert("insert ")
+    @Insert("insert into note (creator_id,creator,avatar_url,title,content) values (1,'默认',2,#{title},#{content})")
+    int insertNote(String title,String content);
 }

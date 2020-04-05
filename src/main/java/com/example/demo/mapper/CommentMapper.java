@@ -19,8 +19,8 @@ public interface CommentMapper {
             "`comment`.to_id = #{to_id} " +
             "ORDER BY " +
             "`comment`.last_edit_time DESC " +
-            "limit 20 offset 0")
-    List<CommentEntity>search_comment(String type, int to_id);
+            "limit 20 offset #{page}")
+    List<CommentEntity>search_comment(String type, int to_id,int page);
 
     @Insert("insert ignore into comment (type,to_id,commentator_id) values (#{type},#{to_id},#{open_id}) " )
     int insertComment_ifnotexist(String type,int to_id,String open_id);//如果返回0，表示已经存在，执行语句二

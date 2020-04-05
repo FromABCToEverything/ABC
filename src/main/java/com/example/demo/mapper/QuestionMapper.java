@@ -15,7 +15,7 @@ public interface QuestionMapper {
         @Select("select * from question where question_id=" +
                      "any(select entry_id from question_set_map where set_id=" +
                          "any(select set_id from question_set where creator_id=#{open_id})) " +
-                "ORDER BY #{sort} #{order} limit 20 offset 0")
+                "ORDER BY ${sort} ${order} limit 20 offset 0")
         List<QuestionEntity> findQuestion_set(String open_id, @Param("sort") String sort, @Param("order") String order);
 
         @Update({"create TEMPORARY table IF NOT EXISTS ${table_name} like question " +
@@ -74,8 +74,9 @@ public interface QuestionMapper {
                 "\tON \n" +
                 "\t\tquestion.question_id = question_set_map.entry_id\n" +
                 "WHERE\n" +
-                "\tquestion_set_map.set_id = #{set_id}")
-        List<QuestionSetEntity> question_set(int set_id);
+                "\tquestion_set_map.set_id = #{set_id} " +
+                "limit 20 offset #{index}")
+        List<QuestionEntity> question_set(int set_id,int index);
 
         @Select("select * from question where question_id=#{set_id}")
         List<QuestionEntity> question(int set_id);

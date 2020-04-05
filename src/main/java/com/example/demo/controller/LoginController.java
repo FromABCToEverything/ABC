@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 import com.example.demo.DemoApplication;
+import com.example.demo.service.impl.SessionServiceimpl;
 import com.example.demo.service.impl.UserServiceimpl;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
     @Autowired
     private UserServiceimpl user;
-
+    private SessionServiceimpl session;
 
     @GetMapping(path="/login")
     public String showHello(@RequestParam String code0, @RequestParam String name, @RequestParam String avatarUrl) {
@@ -79,5 +80,9 @@ public class LoginController {
 
         return session_id;
     }
+
+
+
+
 
 }

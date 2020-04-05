@@ -15,7 +15,7 @@ public interface QuestionService {
     List<QuestionEntity> findQuestion_list_unlogin(int book_id);
     int insert_question(String type,int point_id,String stem,String choices,String answer,String explanation);
     int insert_question_set_map(int point_id,String open_id);
-    List<QuestionSetEntity> question_set(int set_id);
+    List<QuestionEntity> question_set(int set_id,int index);
 
     List<QuestionEntity> question(int set_id);
 }

@@ -5,5 +5,6 @@ import com.example.demo.entity.NoteEntity;
 import java.util.List;
 
 public interface NoteService {
-    List<NoteEntity> findNote(int entry_id);
+    List<NoteEntity> findNote(int set_id,int index);
+    int insertNote(String title,String content);
 }

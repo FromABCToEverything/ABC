@@ -9,12 +9,12 @@ import java.util.Map;
 
 public interface WordService {
     List<WordEntity> findWord(String open_id);
-    Map<String,Integer> findCount(String open_id, int book_id);
+    Map<String,Integer> findCount(String open_id, String set_name);
     Map<String,Integer> findCount_unlogin(int book_id);
     List<WordEntity> finW_list(String open_id, int book_id);
     List<WordEntity> findW_list_unlogin(int book_id);
-    int Count(String open_id, int book_id);
+    //int Count(String open_id, int book_id);
     List<WordEntity> word(int word_id);
-    List<WordEntity> findWord_in_book(int book_id);
-    List<WordEntity> word_set(int set_id);
+    List<WordEntity> findWord_in_book(int book_id,int index);
+    List<WordEntity> word_set(int set_id,int index);
 }

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface BookMapper {
@@ -28,8 +29,13 @@ public interface BookMapper {
            " WHERE "+
            " book_set.creator_id = #{open_id} AND "+
            " book_set.set_name = '默认' "+
-           " LIMIT 0, 30")
-    List<BookEntity> showShelf(@Param("open_id") String open_id) ;
+           " LIMIT #{index} ,20")
+    List<BookEntity> showShelf(@Param("open_id") String open_id,int index) ;
+
+    @Select("select set_id from book_set where creator_id=#{open_id}")
+    Integer ShelfSet(String open_id);
+
+
 
     @Select("SELECT\n" +
             "\tbook.*\n" +
@@ -40,8 +46,9 @@ public interface BookMapper {
             "\tON \n" +
             "\t\tbook.book_id = book_set_map.entry_id\n" +
             "WHERE\n" +
-            "\tbook_set_map.set_id = #{set_id} ")
-    List<BookEntity> book_set(int set_id);//这是在list界面
+            "\tbook_set_map.set_id = #{set_id} " +
+            "limit #{index},20")
+    List<BookEntity> book_set(int set_id,int index);//这是在list界面
 
    /* @Select("select * from book where book_id=#{book_id} limit 20 offset 0 " +
              "union " +
@@ -66,7 +73,7 @@ public interface BookMapper {
         "book_set_map.set_id = book_set.set_id " +
         "WHERE "+
         "book_set.creator_id = #{open_id} "+
-        "ORDER BY #{sort} #{order} limit 20 offset 0")
+        "ORDER BY ${sort} ${order} limit 20 offset 0")
     List<BookEntity> showBook_set(String open_id, @Param("sort") String sort, @Param("order") String order);
 
 //    @Select("select * from #{type} where book.title|book.author like '%${keyword}%' or " +
@@ -78,10 +85,10 @@ public interface BookMapper {
 //   List<BookEntity> showSearch(@Param("type") String type, @Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order);
 
    @Select("select * from book where book.title like (#{keyword}) or book.author like (#{keyword})" +
-           " ORDER BY #{sort} #{order} limit 20 offset 0 ")
-   List<BookEntity> bookType(@Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order);
+           " ORDER BY ${sort} ${order}  ")
+   List<BookEntity> bookType(@Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order,int startIndex);
 
-   //这是按照评分排序
+   //这是按照评分排序limit #{startIndex},20
     @Select("SELECT\n" +
             "\tbook.*\n" +
             "FROM\n" +
@@ -97,16 +104,18 @@ public interface BookMapper {
             "AND\n" +
             "score.type=b" +
             "ORDER BY\n" +
-            "\tscore.avg_score #{order}")
-    List<BookEntity> bookType_score(@Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order);
+            "\tscore.avg_score ${order} " +
+            "limit 20 off #{startIndex}")
+    List<BookEntity> bookType_score(@Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order,int startIndex);
 
    @Select("select * from word_set where set_name like #{keyword} " +
-           "ORDER BY #{sort} #{order} limit 20 offset 0 ")
-    List<WordSetEntity> wordType(@Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order);
+           "ORDER BY ${sort} ${order} limit 20 offset #{startIndex} ")
+    List<WordSetEntity> wordType(@Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order,int startIndex);
 
    @Select("select * from question where question.stem like #{keyword} " +
-           "ORDER BY last_edit_time DESC limit 20 offset 0 ")
-   List<QuestionEntity> questionType(@Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order);
+           "ORDER BY last_edit_time ${order} " +
+           "limit 20 offset #{startIndex} ")
+   List<QuestionEntity> questionType(@Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order,int startIndex);
 
    @Select("SELECT\n" +
            "\tquestion.*\n" +
@@ -121,26 +130,28 @@ public interface BookMapper {
            " AND\n" +
            "\tscore.type = q\n" +
            "ORDER BY\n" +
-           "\tscore.avg_score #{order}")
-   List<QuestionEntity> questionType_score(@Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order);
+           "\tscore.avg_score ${order} " +
+           "limit 20 offset #{startIndex}")
+   List<QuestionEntity> questionType_score(@Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order,int startIndex);
 
    @Select("select * from note_set where set_name like #{keyword} " +
-           "ORDER BY #{sort} #{order} limit 20 offset 0")
-    List<NoteSetEntity> noteType(@Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order);
+           "ORDER BY ${sort} ${order} limit 20 offset #{startIndex}")
+    List<NoteSetEntity> noteType(@Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order,int startIndex);
 
     @Select("select * from book_set where set_name like #{keyword} "+
-            "ORDER BY #{sort} #{order} limit 20 offset 0")
-    List<BookSetEntity> booksetType(@Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order);
+            "ORDER BY ${sort} ${order} limit 20 offset #{startIndex}")
+    List<BookSetEntity> booksetType(@Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order,int startIndex);
 
     @Select("select * from question_set where set_name like #{keyword} "+
-            "ORDER BY #{sort} #{order} limit 20 offset 0")
-    List<QuestionSetEntity> questionsetType(@Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order);
+            "ORDER BY ${sort} ${order} limit 20 offset #{startIndex}")
+    List<QuestionSetEntity> questionsetType(@Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order,int startIndex);
 
 
     @Select("select * from word where word.content like #{keyword} " +
-            "ORDER BY #{sort} DESC limit 20 offset 0 " )
+            "ORDER BY ${sort} DESC limit 20 offset 0 " )
     List<WordEntity> wordType2(@Param("keyword") String keyword,@Param("sort") String sort, @Param("order") String order);
 
 
-
+    @Select("${sql}")
+    List<BookEntity> test_map(String sql);
 }
